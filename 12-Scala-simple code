@@ -1,0 +1,19 @@
+spark-shell
+
+import scala.io.Source
+import java.io.FileNotFoundException
+
+// Define the correct path to the text file
+val filePath = "/Users/rutulbhosale/Desktop/Terminal Saved Output.txt"
+
+try {
+  // Read lines from the file
+  val lines = Source.fromFile(filePath).getLines().toList
+  
+  // Print each line
+  println("Contents of the file:")
+  lines.foreach(println)
+} catch {
+  case e: FileNotFoundException =>
+    println("File not found. Please provide the correct file path.")
+}
