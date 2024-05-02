@@ -1,0 +1,37 @@
+export JAVA_HOME=/usr/local/Cellar/openjdk@11/11.0.23/libexec/openjdk.jdk/Contents/Home
+echo $JAVA_HOME
+spark-shell
+
+
+import org.apache.spark.sql.SparkSession
+
+object WordCount {
+  def main(args: Array[String]): Unit = {
+    // Create a SparkSession
+    val spark = SparkSession.builder()
+      .appName("WordCount")
+      .master("local[*]") // Run Spark locally with as many worker threads as logical cores on your machine
+      .getOrCreate()
+
+    // Suppress unnecessary logging
+    spark.sparkContext.setLogLevel("ERROR")
+
+    // Read input text file
+    val inputPath = "path/to/your/input/file.txt"
+    val textRDD = spark.sparkContext.textFile(inputPath)
+
+    // Split each line into words and count the occurrences of each word
+    val wordCountRDD = textRDD
+      .flatMap(_.split("\\s+")) // Split by whitespace
+      .map(word => (word.toLowerCase, 1)) // Convert each word to lowercase and map to (word, 1)
+      .reduceByKey(_ + _) // Sum up the counts for each word
+
+    // Display word counts
+    wordCountRDD.collect().foreach { case (word, count) =>
+      println(s"$word: $count")
+    }
+
+    // Stop SparkSession
+    spark.stop()
+  }
+}
