@@ -1,3 +1,8 @@
+export JAVA_HOME=/usr/local/opt/openjdk@11
+source ~/.zshrc
+/opt/spark/bin/spark-shell 
+
+
 class Person(name: String, age: Int) {
   def greet(): Unit = {
     println(s"Hello, my name is $name and I am $age years old.")
