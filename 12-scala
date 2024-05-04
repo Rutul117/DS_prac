@@ -1,3 +1,4 @@
+https://chat.openai.com/share/c6e01281-f8a1-47b7-ac55-7f2506af4254
 export JAVA_HOME=/usr/local/opt/openjdk@11
 source ~/.zshrc
 /opt/spark/bin/spark-shell 
